@@ -26,18 +26,22 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 public class Users {
 
-    public Users(String firstName, String lastName, String email, String celPhone, LocalDate birthday, String gender) {
+    public Users(String username, String firstName, String lastName, String email, String celPhone, LocalDate birthday, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.celPhone = celPhone;
         this.birthday = birthday;
         this.gender = gender;
+        this.username=username;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
+
+    @Column(nullable = false, length = 25)
+    private String username;
 
     @Column(nullable = false, length = 25)
     private String firstName;
