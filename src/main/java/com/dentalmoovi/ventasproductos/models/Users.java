@@ -61,13 +61,13 @@ public class Users {
     @Column(nullable = true)
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable( name = "users_roles",
                 joinColumns = { @JoinColumn(name = "id_user") },
                 inverseJoinColumns = { @JoinColumn(name = "id_role") })
     private Set<Roles> roles = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable( name = "users_addresses",
                 joinColumns = { @JoinColumn(name = "id_user") },
                 inverseJoinColumns = { @JoinColumn(name = "id_address") })
