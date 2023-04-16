@@ -1,11 +1,16 @@
 package com.dentalmoovi.ventasproductos.dtos;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class PaymentMethodDTO {
+
+    public PaymentMethodDTO(String nameMethod) {
+        this.nameMethod = nameMethod;
+    }
+    
     private Long idPaymentMethod;
     private String nameMethod;
 }

@@ -1,11 +1,17 @@
 package com.dentalmoovi.ventasproductos.dtos;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class InvoicesDTO {
+    
+    public InvoicesDTO(Integer quantity, double amount) {
+        this.quantity = quantity;
+        this.amount = amount;
+    }
+
     private Long idInvoice;
     private Integer quantity;
     private double amount;

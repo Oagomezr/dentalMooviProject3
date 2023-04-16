@@ -3,12 +3,23 @@ package com.dentalmoovi.ventasproductos.dtos;
 import java.util.HashSet;
 import java.util.Set;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class AddressesDTO {
+
+    public AddressesDTO(String country, String departament, String location, String neighborhood, String address,
+            String phoneContact) {
+        this.country = country;
+        this.departament = departament;
+        this.location = location;
+        this.neighborhood = neighborhood;
+        this.address = address;
+        this.phoneContact = phoneContact;
+    }
+
     private Long idAddress;
     private String country;
     private String departament;
