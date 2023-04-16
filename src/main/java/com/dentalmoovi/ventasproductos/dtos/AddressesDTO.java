@@ -3,11 +3,13 @@ package com.dentalmoovi.ventasproductos.dtos;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class AddressesDTO {
     private Long idAddress;
     private String country;
