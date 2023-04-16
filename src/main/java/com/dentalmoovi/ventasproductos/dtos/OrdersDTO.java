@@ -8,12 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class OrdersDTO {
-    
-    public OrdersDTO(double total, LocalDate orderDate) {
-        this.total = total;
-        this.orderDate = orderDate;
-    }
-    
     private Long idOrder;
     private double total;
     private LocalDate orderDate;

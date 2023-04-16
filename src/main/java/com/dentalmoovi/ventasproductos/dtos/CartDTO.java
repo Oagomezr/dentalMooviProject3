@@ -6,11 +6,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CartDTO {
-
-    public CartDTO(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     private Long idCart;
     private Integer quantity;
     private UsersDTO idUser;

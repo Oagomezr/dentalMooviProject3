@@ -9,17 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class AddressesDTO {
-
-    public AddressesDTO(String country, String departament, String location, String neighborhood, String address,
-            String phoneContact) {
-        this.country = country;
-        this.departament = departament;
-        this.location = location;
-        this.neighborhood = neighborhood;
-        this.address = address;
-        this.phoneContact = phoneContact;
-    }
-
     private Long idAddress;
     private String country;
     private String departament;

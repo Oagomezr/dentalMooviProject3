@@ -12,16 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UsersDTO {
-    public UsersDTO(String username, String firstName, String lastName, String email, String celPhone,
-            LocalDate birthday, String gender) {
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.celPhone = celPhone;
-        this.birthday = birthday;
-        this.gender = gender;
-    }
     private Long idUser;
     private String username;
     private String firstName;
