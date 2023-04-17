@@ -2,14 +2,19 @@ package com.dentalmoovi.ventasproductos.dtos;
 
 import java.time.LocalDate;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class OrdersDTO {
+
+    public OrdersDTO(Long idOrder, double total, LocalDate orderDate) {
+        this.idOrder = idOrder;
+        this.total = total;
+        this.orderDate = orderDate;
+    }
+    
     private Long idOrder;
     private double total;
     private LocalDate orderDate;
