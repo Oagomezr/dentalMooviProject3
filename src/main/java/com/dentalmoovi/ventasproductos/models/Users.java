@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "users")
+@Table
 public class Users {
 
     public Users(String username, String firstName, String lastName, String email, String celPhone, LocalDate birthday, String gender) {
@@ -76,4 +76,5 @@ public class Users {
                 joinColumns = { @JoinColumn(name = "id_user") },
                 inverseJoinColumns = { @JoinColumn(name = "id_address") })
     private Set<Addresses> addresses = new HashSet<>();
+
 }

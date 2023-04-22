@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "cart")
+@Table
 public class Cart {
 
     @Id

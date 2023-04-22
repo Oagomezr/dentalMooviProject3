@@ -3,8 +3,10 @@ package com.dentalmoovi.ventasproductos.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "addresses")
+@Table
 public class Addresses {
 
     public Addresses(String country, String departament, String location, String neighborhood, String address,
@@ -46,6 +48,6 @@ public class Addresses {
     @Column(nullable = false, length = 15)
     private String phoneContact;
 
-    @ManyToMany(mappedBy = "addresses")
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Users> users = new HashSet<>();
 }

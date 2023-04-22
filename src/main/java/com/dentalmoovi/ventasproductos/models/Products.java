@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "products")
+@Table
 public class Products {
 
     @Id
