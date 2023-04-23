@@ -28,7 +28,7 @@ public class UserSer implements IUserSer{
     private IAddressesRep addressesRep;
 
     @Override
-    public UsersDTO createUser(UsersDTO userDTO) throws Exception {
+    public UsersDTO createUser(UsersDTO userDTO){
         Users newUser = insertUserBasicDataFromDTO(userDTO); //add non foreign data
         
         newUser.setRoles(defaultRole()); //add default role --> USER
@@ -52,8 +52,9 @@ public class UserSer implements IUserSer{
     }
 
     @Override
-    public UsersDTO updateUser(Long id, UsersDTO userDTO) throws Exception {
+    public UsersDTO updateUser(Long id, UsersDTO userDTO){
         Users user = usersRep.findById(id).orElseThrow(() -> new DataNotFoundException(notFoundMessage));
+        userDTO.setIdUser(id);
         user.setUsername(userDTO.getUsername());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
@@ -61,6 +62,7 @@ public class UserSer implements IUserSer{
         user.setCelPhone(userDTO.getCelPhone());
         user.setBirthday(userDTO.getBirthday());
         user.setGender(userDTO.getGender());
+        user = usersRep.save(user);
         return userDTO;
     }
 

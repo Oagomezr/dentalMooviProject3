@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ public class UsersController {
     private UserSer userSer;
 
     @PostMapping
-    public ResponseEntity<UsersDTO> createUser(@RequestBody UsersDTO userDTO) throws Exception{
+    public ResponseEntity<UsersDTO> createUser(@RequestBody UsersDTO userDTO){
         UsersDTO userCreated = userSer.createUser(userDTO);
         return ResponseEntity.created(URI.create("/users/"+userCreated.getIdUser())).body(userCreated);
     }
@@ -34,6 +35,17 @@ public class UsersController {
         try {
             UsersDTO userGetted = userSer.getUser(id);
             return ResponseEntity.ok(userGetted);
+        } catch (DataNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsersDTO> actualizarUsuario(@PathVariable("id") Long id, @RequestBody UsersDTO usersDTO) {
+        try {
+            UsersDTO userUpdated = userSer.updateUser(id, usersDTO);
+            return ResponseEntity.ok(userUpdated);
         } catch (DataNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
