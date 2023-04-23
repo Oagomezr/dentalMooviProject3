@@ -1,7 +1,9 @@
 package com.dentalmoovi.ventasproductos.services;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,12 @@ public class UserSer implements IUserSer{
     private IRolesRep rolesRep;
     @Autowired
     private IAddressesRep addressesRep;
+
+    @Override
+    public List<UsersDTO> getAllUsers() {
+        List<Users> users = usersRep.findAll();
+        return users.stream().map(this::convertUserToDTO).collect(Collectors.toList());
+    }
 
     @Override
     public UsersDTO createUser(UsersDTO userDTO){

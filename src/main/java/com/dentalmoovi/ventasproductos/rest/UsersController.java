@@ -1,6 +1,7 @@
 package com.dentalmoovi.ventasproductos.rest;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,11 @@ public class UsersController {
     
     @Autowired
     private UserSer userSer;
+
+    public ResponseEntity<List<UsersDTO>> getAllUsers(){
+        List <UsersDTO> users = userSer.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
 
     @PostMapping
     public ResponseEntity<UsersDTO> createUser(@RequestBody UsersDTO userDTO){
