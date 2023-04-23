@@ -25,6 +25,7 @@ public class UsersController {
     @Autowired
     private UserSer userSer;
 
+    @GetMapping
     public ResponseEntity<List<UsersDTO>> getAllUsers(){
         List <UsersDTO> users = userSer.getAllUsers();
         return ResponseEntity.ok(users);
