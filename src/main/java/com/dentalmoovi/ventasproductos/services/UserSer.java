@@ -2,6 +2,7 @@ package com.dentalmoovi.ventasproductos.services;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.dentalmoovi.ventasproductos.dtos.AddressesDTO;
 import com.dentalmoovi.ventasproductos.dtos.RolesDTO;
 import com.dentalmoovi.ventasproductos.dtos.UsersDTO;
+import com.dentalmoovi.ventasproductos.exceptions.DataExistException;
 import com.dentalmoovi.ventasproductos.exceptions.DataNotFoundException;
 import com.dentalmoovi.ventasproductos.models.Addresses;
 import com.dentalmoovi.ventasproductos.models.Roles;
@@ -34,6 +36,9 @@ public class UserSer implements IUserSer{
 
     @Override
     public UsersDTO createUser(UsersDTO userDTO){
+
+        checkIfUserExist(userDTO);
+
         Users newUser = insertUserBasicDataFromDTO(userDTO); //add non foreign data
         
         newUser.setRoles(defaultRole()); //add default role --> USER
@@ -70,6 +75,26 @@ public class UserSer implements IUserSer{
     public void deleteUser(Long id) {
         Users user = usersRep.findById(id).orElseThrow(() -> new DataNotFoundException(notFoundMessage));
         usersRep.delete(user);
+    }
+
+    private void checkIfUserExist(UsersDTO userDTO){
+        // Check if username already exist
+        Optional<Users> existingUser = usersRep.findByUsername(userDTO.getUsername());
+        if (existingUser.isPresent()) {
+            throw new DataExistException("El nombre de usuario ya está registrado");
+        }
+
+        // Check if email already exist
+        existingUser = usersRep.findByEmail(userDTO.getEmail());
+        if (existingUser.isPresent()) {
+            throw new IllegalArgumentException("El correo electrónico ya está registrado");
+        }
+
+        // Check if phone already exist
+        existingUser = usersRep.findByCelPhone(userDTO.getCelPhone());
+        if (existingUser.isPresent()) {
+            throw new IllegalArgumentException("El número de teléfono ya está registrado");
+        }
     }
 
     private UsersDTO convertUserToDTO(Users user){
