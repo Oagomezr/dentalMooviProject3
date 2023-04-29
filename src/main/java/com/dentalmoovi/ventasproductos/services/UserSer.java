@@ -15,7 +15,6 @@ import com.dentalmoovi.ventasproductos.exceptions.DataNotFoundException;
 import com.dentalmoovi.ventasproductos.models.Addresses;
 import com.dentalmoovi.ventasproductos.models.Roles;
 import com.dentalmoovi.ventasproductos.models.Users;
-import com.dentalmoovi.ventasproductos.repositories.IAddressesRep;
 import com.dentalmoovi.ventasproductos.repositories.IRolesRep;
 import com.dentalmoovi.ventasproductos.repositories.IUsersRep;
 
@@ -26,8 +25,6 @@ public class UserSer implements IUserSer{
     private IUsersRep usersRep;
     @Autowired
     private IRolesRep rolesRep;
-    @Autowired
-    private IAddressesRep addressesRep;
 
     @Override
     public List<UsersDTO> getAllUsers() {
@@ -40,11 +37,6 @@ public class UserSer implements IUserSer{
         Users newUser = insertUserBasicDataFromDTO(userDTO); //add non foreign data
         
         newUser.setRoles(defaultRole()); //add default role --> USER
-
-        Set<AddressesDTO> addressesDTO = userDTO.getAddresses();
-        if(addressesDTO != null){
-            newUser.setAddresses(createAddressesToDatabaseFromDTO(addressesDTO)); //add user addresses
-        }
 
         Users userCreated = usersRep.save(newUser); // add complete user to the database
 
@@ -124,29 +116,6 @@ public class UserSer implements IUserSer{
 
     private UsersDTO getUserFromDatabase(Users user){
         return new UsersDTO(user.getIdUser(), user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getCelPhone(), user.getBirthday(), user.getGender());
-    }
-
-    private Set<Addresses> createAddressesToDatabaseFromDTO(Set<AddressesDTO> addressesDTO){
-        Set<Addresses> addresses = new HashSet<>();
-        for(AddressesDTO addressDTO : addressesDTO){
-            if(addressSearchFromDatabase(addressDTO) == null){ //if direction doesn't exist inside database
-                Addresses newAddress = createAddressFromDTO(addressDTO);
-                newAddress = addressesRep.save(newAddress); //save address in database
-            }
-            addresses.add(addressSearchFromDatabase(addressDTO)); //add address to collection
-        }
-        return addresses; //return all directions created
-    }
-
-    private Addresses createAddressFromDTO(AddressesDTO addressDTO){
-        return new Addresses(  
-            addressDTO.getCountry(), addressDTO.getDepartament(), addressDTO.getLocation(), 
-            addressDTO.getNeighborhood(), addressDTO.getAddress(), addressDTO.getPhoneContact());
-    }
-
-    private Addresses addressSearchFromDatabase(AddressesDTO addressDTO){
-        return addressesRep.findByAddressAndLocation(  
-            addressDTO.getAddress(),addressDTO.getLocation());
     }
     
     private Users insertUserBasicDataFromDTO(UsersDTO userDTO){
