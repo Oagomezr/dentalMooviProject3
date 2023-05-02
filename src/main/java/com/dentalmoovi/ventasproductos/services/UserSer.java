@@ -87,13 +87,13 @@ public class UserSer implements IUserSer{
         // Check if email already exist
         existingUser = usersRep.findByEmail(userDTO.getEmail());
         if (existingUser.isPresent()) {
-            throw new IllegalArgumentException("El correo electrónico ya está registrado");
+            throw new DataExistException("El correo electrónico ya está registrado");
         }
 
         // Check if phone already exist
         existingUser = usersRep.findByCelPhone(userDTO.getCelPhone());
         if (existingUser.isPresent()) {
-            throw new IllegalArgumentException("El número de teléfono ya está registrado");
+            throw new DataExistException("El número de teléfono ya está registrado");
         }
     }
 
