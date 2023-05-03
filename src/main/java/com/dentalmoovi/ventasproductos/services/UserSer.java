@@ -2,7 +2,6 @@ package com.dentalmoovi.ventasproductos.services;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -77,22 +76,33 @@ public class UserSer implements IUserSer{
         usersRep.delete(user);
     }
 
+    @Override
+    public boolean checkValueExists(String field, String value) {
+        switch (field) {
+            case "username":
+                return usersRep.existsByUsername(value);
+            case "celPhone":
+                return usersRep.existsByCelPhone(value);
+            case "email":
+                return usersRep.existsByEmail(value);
+            default:
+                throw new IllegalArgumentException("Invalid field: " + field);
+        }
+    }
+
     private void checkIfUserExist(UsersDTO userDTO){
         // Check if username already exist
-        Optional<Users> existingUser = usersRep.findByUsername(userDTO.getUsername());
-        if (existingUser.isPresent()) {
+        if (usersRep.existsByUsername(userDTO.getUsername())) {
             throw new DataExistException("El nombre de usuario ya está registrado");
         }
 
         // Check if email already exist
-        existingUser = usersRep.findByEmail(userDTO.getEmail());
-        if (existingUser.isPresent()) {
+        if (usersRep.existsByEmail(userDTO.getEmail())) {
             throw new DataExistException("El correo electrónico ya está registrado");
         }
 
         // Check if phone already exist
-        existingUser = usersRep.findByCelPhone(userDTO.getCelPhone());
-        if (existingUser.isPresent()) {
+        if (usersRep.existsByCelPhone(userDTO.getCelPhone())) {
             throw new DataExistException("El número de teléfono ya está registrado");
         }
     }
@@ -157,5 +167,6 @@ public class UserSer implements IUserSer{
     }
 
     private String notFoundMessage = "user does not exists";
+
 }
 

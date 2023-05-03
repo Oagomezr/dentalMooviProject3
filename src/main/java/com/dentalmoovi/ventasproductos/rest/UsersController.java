@@ -77,4 +77,9 @@ public class UsersController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/checkValueExists/{field}/{value}")
+    public boolean checkValueExists(@PathVariable String field, @PathVariable String value) {
+        return userSer.checkValueExists(field, value);
+    }
 }
