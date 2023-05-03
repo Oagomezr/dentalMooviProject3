@@ -81,8 +81,6 @@ public class UserSer implements IUserSer{
         switch (field) {
             case "username":
                 return usersRep.existsByUsername(value);
-            case "celPhone":
-                return usersRep.existsByCelPhone(value);
             case "email":
                 return usersRep.existsByEmail(value);
             default:
@@ -100,11 +98,7 @@ public class UserSer implements IUserSer{
         if (usersRep.existsByEmail(userDTO.getEmail())) {
             throw new DataExistException("El correo electrónico ya está registrado");
         }
-
-        // Check if phone already exist
-        if (usersRep.existsByCelPhone(userDTO.getCelPhone())) {
-            throw new DataExistException("El número de teléfono ya está registrado");
-        }
+        
     }
 
     private UsersDTO convertUserToDTO(Users user){
