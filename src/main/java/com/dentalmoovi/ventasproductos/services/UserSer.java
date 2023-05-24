@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.dentalmoovi.ventasproductos.dtos.AddressesDTO;
@@ -27,8 +27,6 @@ public class UserSer implements IUserSer{
     private IUsersRep usersRep;
     @Autowired
     private IRolesRep rolesRep;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<UsersDTO> getAllUsers() {
@@ -45,7 +43,7 @@ public class UserSer implements IUserSer{
         
         newUser.setRoles(defaultRole()); //add default role --> USER
 
-        String hashedPassword = passwordEncoder.encode(userDTO.getPassword());
+        String hashedPassword = new BCryptPasswordEncoder().encode(userDTO.getPassword());
 
         newUser.setPassword(hashedPassword);
 
